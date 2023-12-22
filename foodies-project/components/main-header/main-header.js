@@ -1,7 +1,6 @@
 // NextJS packages
 import Link from "next/link";
 import Image from "next/image";
-
 // Images
 import logoImg from "@/assets/logo.png";
 
@@ -9,6 +8,7 @@ import logoImg from "@/assets/logo.png";
 import style from "./main-header.module.css";
 
 import MainHeaderBackground from "./main-header-background";
+import NavLink from "./nav-link";
 
 // This header will be the deafault header that we will be inputing into our layout for the rest of the website
 export default function MainHeader() {
@@ -26,10 +26,10 @@ export default function MainHeader() {
         <nav className={style.nav}>
           <ul>
             <li>
-              <Link href="/meals">Browse Meals</Link>
+              <NavLink href="/meals">Browse Meals</NavLink>
             </li>
             <li>
-              <Link href="/community">Community</Link>
+              <NavLink href="/community">Foodies Community</NavLink>
             </li>
           </ul>
         </nav>
