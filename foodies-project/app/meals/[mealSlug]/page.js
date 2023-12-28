@@ -1,9 +1,16 @@
 import { getMeal } from "@/lib/meals";
 import classes from "./page.module.css";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export default function MealDetailsPage({ params }) {
+  // Notice that we are using the [mealSlug] from the mealSlug folder, and we get access to this throught the params
+  // We are also accessing, the data in the database with the getMeal<located on the lib folder>
   const meal = getMeal(params.mealSlug);
+
+  if (!meal) {
+    notFound();
+  }
 
   // This line of code modify the string like html so we can have line breaks
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
