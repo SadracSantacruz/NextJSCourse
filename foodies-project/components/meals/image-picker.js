@@ -1,9 +1,10 @@
 "use client";
 
 // Importing the 'useRef' hook from the 'react' library
-import { useRef } from "react";
+import { useRef, useState } from "react";
 // Importing the CSS styles for the component
 import style from "./image-picker.module.css";
+import Image from "next/image";
 
 /**
  * Function-based React component for an image picker
@@ -11,6 +12,7 @@ import style from "./image-picker.module.css";
  * @param {name} Name attribute for the input field
  */
 export default function ImagePicker({ label, name }) {
+  const [pickedImage, setPickedImage] = useState();
   // Creating a ref to access the file input element
   const imageInput = useRef();
 
@@ -21,6 +23,20 @@ export default function ImagePicker({ label, name }) {
     imageInput.current.click();
   }
 
+  function handleImageChange(event) {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const fileReader = new FileReader();
+
+    fileReader.onload = () => {
+      // this is the URL
+      setPickedImage(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  }
+
   // Render method of the component
   return (
     // Wrapper div with the specified CSS class
@@ -29,6 +45,12 @@ export default function ImagePicker({ label, name }) {
       <label htmlFor={name}>{label}</label>
       {/* Controls div containing file input and button */}
       <div className={style.controls}>
+        <div className={style.preview}>
+          {!pickedImage && <p>No image picked yet</p>}
+          {pickedImage && (
+            <Image src={pickedImage} alt="Image selcted by the user" fill />
+          )}
+        </div>
         {/* File input element */}
         <input
           className={style.input}
@@ -37,6 +59,7 @@ export default function ImagePicker({ label, name }) {
           accept="image/png, image/jpeg"
           name={name}
           ref={imageInput} // Associating the ref with the file input element
+          onChange={handleImageChange}
         />
         {/* Button to trigger file input click */}
         <button
