@@ -3,6 +3,19 @@ import classes from "./page.module.css";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({ params }) {
+  const meal = getMeal(params.mealSlug);
+
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
+
 export default function MealDetailsPage({ params }) {
   // Notice that we are using the [mealSlug] from the mealSlug folder, and we get access to this throught the params
   // We are also accessing, the data in the database with the getMeal<located on the lib folder>
