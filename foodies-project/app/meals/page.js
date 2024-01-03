@@ -1,18 +1,21 @@
+import { Suspense } from "react";
 import Link from "next/link";
 
 import classes from "./page.module.css";
 import MealsGrid from "@/components/meals/meals-grid";
 import { getMeals } from "@/lib/meals";
-import { Suspense } from "react";
 
-/**
- * Performs data fetching, necessary for loading and fetching time from the sertver to user side.
- * @returns the Object MealsGrid which takes in the data from the database meals.
- */
 async function Meals() {
+  console.log("Fetching meals");
   const meals = await getMeals();
+
   return <MealsGrid meals={meals} />;
 }
+
+export const metadata = {
+  title: "All Meals",
+  description: "Browse the delicious meals shared by our community.",
+};
 
 export default function MealsPage() {
   return (
@@ -30,9 +33,8 @@ export default function MealsPage() {
         </p>
       </header>
       <main className={classes.main}>
-        {/* Component that allows to handle data until some data has been loaded */}
         <Suspense
-          fallback={<p className={classes.loading}>Fetching Meals...</p>}
+          fallback={<p className={classes.loading}>Fetching meals...</p>}
         >
           <Meals />
         </Suspense>

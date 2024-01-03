@@ -1,10 +1,10 @@
 "use client";
 
-export default function Error({ error }) {
+export default function Error() {
   return (
     <main className="error">
-      <h1>An error Ocurred!</h1>
-      <p>Failed to crate a meal</p>
+      <h1>An error occurred!</h1>
+      <p>Failed to create meal.</p>
     </main>
   );
 }
